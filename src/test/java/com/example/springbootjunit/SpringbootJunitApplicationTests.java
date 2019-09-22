@@ -71,6 +71,7 @@ public class SpringbootJunitApplicationTests {
 
     @Ignore //忽略的测试方法
     public static void ignoreMethod() {
+
         System.out.println("junit demo success  --> ignoreMethod git remote add origin!");
     }
 
