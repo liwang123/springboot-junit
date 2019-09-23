@@ -1,80 +1,140 @@
 package com.example.springbootjunit;
 
-import controller.LearnController;
-import org.junit.*;
+import com.alibaba.fastjson.JSON;
+import com.example.springbootjunit.pojo.User;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.annotation.Repeat;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.content;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * 集成 Web环境方式
+ */
 @RunWith(SpringRunner.class)
-@SpringBootTest
+//webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT随机端口
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+//事务回滚
+@Rollback
+//指定配置文件
+@ActiveProfiles("test")
 public class SpringbootJunitApplicationTests {
-
 
     @Autowired
     private WebApplicationContext webApplicationContext;
 
     private MockMvc mockMvc;
 
+    private MockHttpSession session;
+
     @Before
     public void setup() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+        this.mockMvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext)
+                .alwaysDo(print())//全局配置
+                .alwaysExpect(status().isOk())
+                .defaultRequest(get("").accept(MediaType.APPLICATION_JSON_UTF8))
+                .build();
+        this.session = new MockHttpSession();
+        User user = new User(1L, "root", 12);
+        this.session.setAttribute("user", user);
     }
+
+    /**
+     * mockMvc.perform执行一个请求
+     * MockMvcRequestBuilders.get(“/user/1”)构造一个请求，Post请求就用.post方法
+     * contentType(MediaType.APPLICATION_JSON_UTF8)代表发送端发送的数据格式是application/json;charset=UTF-8
+     * accept(MediaType.APPLICATION_JSON_UTF8)代表客户端希望接受的数据类型为application/json;charset=UTF-8
+     * session(session)注入一个session，这样拦截器才可以通过
+     * ResultActions.andExpect添加执行完成后的断言
+     * ResultActions.andExpect(MockMvcResultMatchers.status().isOk())方法看请求的状态响应码是否为200如果不是则抛异常，测试不通过
+     * andExpect(MockMvcResultMatchers.jsonPath(“$.name”).value(“测试”))这里jsonPath用来获取name字段比对是否为测试,不是就测试不通过
+     * ResultActions.andDo添加一个结果处理器，表示要对结果做点什么事情，比如此处使用MockMvcResultHandlers.print()输出整个响应结果信息
+     *
+     * @throws Exception
+     */
+    @Test
+    @Repeat(2)
+    public void getUser() throws Exception {
+        String name = "1";
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/learn/getUser")
+                .param("name", name)
+                .session(this.session)
+        )
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("qq"))
+        ;
+    }
+
 
     @Test
-    public void testEmployee() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(get("/learn/test")).andExpect(status().isOk())
-                .andReturn();
-
-        System.out.println(mvcResult.getResponse());
+    public void addLearn() throws Exception {
+        String name = "1";
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/learn/testName")
+                .accept(MediaType.APPLICATION_JSON_UTF8)
+                .param("name", name)
+        )
+                .andExpect(content().string("1"))
+                .andDo(print());
     }
 
+//    /**
+//     * 异步请求
+//     *
+//     * @throws Exception
+//     */
+//    @Test
+//    public void testGetUserList() throws Exception {
+//        MvcResult result = this.mockMvc
+//                .perform(get("/learn/getUser")
+//                        .contentType(APPLICATION_JSON)
+//                        .param("name", "1"))
+//                .andExpect(request().asyncNotStarted())
+//                .andReturn();
+//        this.mockMvc
+//                .perform(asyncDispatch(result))
+//                .andExpect(status().isOk())
+//                .andExpect(header().string(CONTENT_TYPE, APPLICATION_JSON_VALUE))
+//                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("qq"));
+//    }
 
+    /**
+     * Method: addUser(@RequestBody User user)
+     */
     @Test
-    @Repeat(3)
-    public void contextLoads() {
-        System.out.println(1);
+    public void testAddUser() throws Exception {
+        User user = new User();
+        user.setId(1L);
+        user.setName("jamie");
+        user.setAge(20);
+        this.mockMvc.perform(post("/add").contentType(APPLICATION_JSON).content(JSON.toJSONString(user)))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andReturn().getResponse().getContentAsString();
+
     }
 
 
-    @Before //初始化方法 每次执行 test 都会执行 before 和 after
-    public void beforeMethod() {
-        System.out.println("junit demo success  --> beforeMethod !");
+    @After
+    public void test() {
+        System.out.println("--------------Runing End-------------");
     }
-
-    @After  //释放资源
-    public void afterMethod() {
-        System.out.println("junit demo success  --> afterMethod !");
-    }
-
-    @BeforeClass  //针对所有测试，只执行一次，且必须为static void
-    public static void beforeClassMethod() {
-        System.out.println("junit demo success  --> beforeClassMethod !");
-    }
-
-    @AfterClass  //针对所有测试，只执行一次，且必须为static void
-    public static void afterClassMethod() {
-        System.out.println("junit demo success  --> afterClassMethod !");
-    }
-
-    @Ignore //忽略的测试方法
-    public static void ignoreMethod() {
-
-
-        System.out.println("junit demo success  --> ignoreMethod git remote add origin!");
-    }
-
 
 }
