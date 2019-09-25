@@ -71,46 +71,46 @@ public class SpringbootJunitApplicationTests {
      *
      * @throws Exception
      */
-    @Test
-    @Repeat(2)
-    public void getUser() throws Exception {
-        String name = "1";
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/learn/getUser")
-                .param("name", name)
-                .session(this.session)
-        )
-                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("qq"))
-        ;
-    }
-
-
-    @Test
-    public void addLearn() throws Exception {
-        String name = "1";
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/learn/testName")
-                .accept(MediaType.APPLICATION_JSON_UTF8)
-                .param("name", name)
-        )
-                .andExpect(content().string("1"))
-                .andDo(print());
-    }
-
-
-    /**
-     * Method: addUser(@RequestBody User user)
-     */
-    @Test
-    public void testAddUser() throws Exception {
-        User user = new User();
-        user.setId(1L);
-        user.setName("jamie");
-        user.setAge(20);
-        this.mockMvc.perform(post("/add").contentType(APPLICATION_JSON).content(JSON.toJSONString(user)))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andReturn().getResponse().getContentAsString();
-
-    }
+//    @Test
+//    @Repeat(2)
+//    public void getUser() throws Exception {
+//        String name = "1";
+//        this.mockMvc.perform(MockMvcRequestBuilders.get("/learn/getUser")
+//                .param("name", name)
+//                .session(this.session)
+//        )
+//                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("qq"))
+//        ;
+//    }
+//
+//
+//    @Test
+//    public void addLearn() throws Exception {
+//        String name = "1";
+//        this.mockMvc.perform(MockMvcRequestBuilders.get("/learn/testName")
+//                .accept(MediaType.APPLICATION_JSON_UTF8)
+//                .param("name", name)
+//        )
+//                .andExpect(content().string("1"))
+//                .andDo(print());
+//    }
+//
+//
+//    /**
+//     * Method: addUser(@RequestBody User user)
+//     */
+//    @Test
+//    public void testAddUser() throws Exception {
+//        User user = new User();
+//        user.setId(1L);
+//        user.setName("jamie");
+//        user.setAge(20);
+//        this.mockMvc.perform(post("/add").contentType(APPLICATION_JSON).content(JSON.toJSONString(user)))
+//                .andExpect(status().isOk())
+//                .andDo(print())
+//                .andReturn().getResponse().getContentAsString();
+//
+//    }
 
 
     @After

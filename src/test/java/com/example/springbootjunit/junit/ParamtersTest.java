@@ -46,4 +46,9 @@ public class ParamtersTest {
         return result;
     }
 
+    @Test
+    public void testPop(){
+        System.out.println(-123/10);
+    }
+
 }

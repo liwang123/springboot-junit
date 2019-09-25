@@ -17,9 +17,14 @@ public class FooRepositoryImpl implements FooRepository {
 
     @Override
     public void create() {
-        this.jdbcTemplate.update("DROP TABLE IF EXISTS user ;CREATE TABLE FOO (\n" +
+        this.jdbcTemplate.update("CREATE TABLE FOO (\n" +
                 "  name VARCHAR2(100)\n" +
                 "); ");
+    }
+
+    @Override
+    public void drop() {
+        jdbcTemplate.update("drop table FOO");
     }
 
     @Override

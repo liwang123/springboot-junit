@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -24,6 +26,10 @@ public class Boot_1_IT extends AbstractTransactionalTestNGSpringContextTests {
         this.fooRepository.create();
     }
 
+    @AfterMethod
+    public void drop(){
+        fooRepository.drop();
+    }
 
     @Test
     public void testSave() {

@@ -51,9 +51,7 @@ public class SpringMvc_1_Test extends AbstractTestNGSpringContextTests {
     @DataProvider(name = "add")
     public Object[][] Users() {
         return new Object[][]{
-                {"1"},
-                {"2"},
-                {"3"},
+                {"1"}
         };
     }
 

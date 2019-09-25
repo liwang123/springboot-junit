@@ -10,4 +10,6 @@ public interface FooRepository {
 
     void create();
 
+    void drop();
+
 }
