@@ -15,7 +15,7 @@
         <parameter name="add2" value="2"/>
         <parameter name="result" value="5"/>
         <classes>
-            <class name="com.example.springbootjunit.TestNg">
+            <class name="com.example.springbootjunit.testng.TestNg">
                 <methods>
                     <include name=".*test.*"/>
                 </methods>
@@ -24,7 +24,7 @@
     </test>
     <test name="顺序测试" preserve-order="true">
         <classes>
-            <class name="com.example.springbootjunit.TestNg">
+            <class name="com.example.springbootjunit.testng.TestNg">
                 <methods>
                     <include name="testCase3"/>
                     <include name="testCase1"/>

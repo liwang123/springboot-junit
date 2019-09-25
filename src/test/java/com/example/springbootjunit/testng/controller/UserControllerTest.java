@@ -1,5 +1,6 @@
-package com.example.springbootjunit.controller;
+package com.example.springbootjunit.testng.controller;
 
+import com.example.springbootjunit.controller.UserController;
 import com.example.springbootjunit.pojo.User;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;

@@ -1,5 +1,6 @@
-package com.example.springbootjunit.controller;
+package com.example.springbootjunit.testng.controller;
 
+import com.example.springbootjunit.controller.LearnController;
 import com.example.springbootjunit.pojo.User;
 import com.example.springbootjunit.service.UserService;
 import org.junit.runner.RunWith;

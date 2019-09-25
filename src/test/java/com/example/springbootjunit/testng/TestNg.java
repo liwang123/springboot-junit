@@ -1,4 +1,4 @@
-package com.example.springbootjunit;
+package com.example.springbootjunit.testng;
 
 import com.example.springbootjunit.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,7 +68,6 @@ public class TestNg extends AbstractTestNGSpringContextTests {
     @DataProvider(name = "add")
     public Object[][] Users() {
         return new Object[][]{
-                {3, 2, 5},
                 {2, 2, 4},
                 {3, 3, 7},
         };
