@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
- * 集成 Web环境方式
+ *
  */
 @RunWith(SpringRunner.class)
 //webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT随机端口
@@ -95,25 +95,6 @@ public class SpringbootJunitApplicationTests {
                 .andDo(print());
     }
 
-//    /**
-//     * 异步请求
-//     *
-//     * @throws Exception
-//     */
-//    @Test
-//    public void testGetUserList() throws Exception {
-//        MvcResult result = this.mockMvc
-//                .perform(get("/learn/getUser")
-//                        .contentType(APPLICATION_JSON)
-//                        .param("name", "1"))
-//                .andExpect(request().asyncNotStarted())
-//                .andReturn();
-//        this.mockMvc
-//                .perform(asyncDispatch(result))
-//                .andExpect(status().isOk())
-//                .andExpect(header().string(CONTENT_TYPE, APPLICATION_JSON_VALUE))
-//                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("qq"));
-//    }
 
     /**
      * Method: addUser(@RequestBody User user)
