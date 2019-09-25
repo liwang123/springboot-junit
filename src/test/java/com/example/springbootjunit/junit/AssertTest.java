@@ -1,9 +1,11 @@
 package com.example.springbootjunit.junit;
 
 import com.example.springbootjunit.pojo.User;
+
 import org.junit.Assert;
 import org.junit.Test;
 
+import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 
@@ -56,5 +58,7 @@ public class AssertTest {
     @Test
     public void testAssertThat() {
         Assert.assertThat(1, is(1));
+        Assert.assertTrue(anything().matches(3));
+
     }
 }
