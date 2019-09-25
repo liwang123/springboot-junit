@@ -1,0 +1,36 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="测试套件">
+    <test name="分组测试">
+        <groups>
+            <dependencies>
+                <group name="正常" depends-on="异常"></group>
+            </dependencies>
+        </groups>
+        <packages>
+            <package name="com.example.springbootjunit"></package>
+        </packages>
+    </test>
+    <test name="参数测试">
+        <parameter name="add1" value="3"/>
+        <parameter name="add2" value="2"/>
+        <parameter name="result" value="5"/>
+        <classes>
+            <class name="com.example.springbootjunit.TestNg">
+                <methods>
+                    <include name=".*test.*"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="顺序测试" preserve-order="true">
+        <classes>
+            <class name="com.example.springbootjunit.TestNg">
+                <methods>
+                    <include name="testCase3"/>
+                    <include name="testCase1"/>
+                    <include name="testCase2"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

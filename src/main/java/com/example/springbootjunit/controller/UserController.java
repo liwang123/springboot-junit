@@ -1,4 +1,4 @@
-package com.example.springbootjunit;
+package com.example.springbootjunit.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.example.springbootjunit.pojo.User;
