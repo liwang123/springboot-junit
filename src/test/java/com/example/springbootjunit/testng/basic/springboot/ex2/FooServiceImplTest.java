@@ -27,7 +27,7 @@ public class FooServiceImplTest extends AbstractTestNGSpringContextTests {
 
     @Configuration
     @Import(FooServiceImpl.class)
-    static class Config {
+    static class ConfigTest {
     }
 
 }

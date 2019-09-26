@@ -1,12 +1,10 @@
 package com.example.springbootjunit.junit;
 
 import com.example.springbootjunit.pojo.User;
-
 import org.junit.Assert;
 import org.junit.Test;
 
-import static org.hamcrest.Matchers.anything;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
 public class AssertTest {
@@ -59,6 +57,13 @@ public class AssertTest {
     public void testAssertThat() {
         Assert.assertThat(1, is(1));
         Assert.assertTrue(anything().matches(3));
+    }
 
+    @Test
+    public void testAssert() {
+        Assert.assertThat("不等于", 1, is(1));
+        Assert.assertTrue(anything().matches(3));
+        Assert.assertThat("异常", "test", equalTo("test"));
+        Assert.assertThat("", notNullValue());
     }
 }

@@ -5,6 +5,7 @@ import com.example.springbootjunit.controller.FooController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -27,6 +28,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 @WebAppConfiguration
 @ContextConfiguration(classes = {FooController.class})
 @TestExecutionListeners(listeners = MockitoTestExecutionListener.class)
+@ActiveProfiles("dev")
 public class SpringMvc_2_Test extends AbstractTestNGSpringContextTests {
 
     @Autowired

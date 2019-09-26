@@ -6,5 +6,5 @@ import org.springframework.context.annotation.Import;
 
 @SpringBootConfiguration
 @Import(FooServiceImpl.class)
-public class Config {
+public class ConfigTest {
 }

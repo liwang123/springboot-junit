@@ -1,15 +1,13 @@
 package com.example.springbootjunit.testng.basic.springboot.ex6;
 
 import com.example.springbootjunit.service.FooService;
+import com.example.springbootjunit.testng.basic.BasicJunitTest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.Test;
 
 import static org.testng.AssertJUnit.assertEquals;
 
-@SpringBootTest
-public class FooServiceImplTest extends AbstractTestNGSpringContextTests {
+public class FooServiceImplTest extends BasicJunitTest {
 
     @Autowired
     private FooService foo;

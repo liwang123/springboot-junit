@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 
 import static org.testng.AssertJUnit.assertEquals;
 
-@SpringBootTest(classes = Config.class)
+@SpringBootTest(classes = ConfigTest.class)
 public class FooServiceImplTest extends AbstractTestNGSpringContextTests {
 
     @Autowired
